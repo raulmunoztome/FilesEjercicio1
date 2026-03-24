@@ -17,6 +17,14 @@ public class Moto extends Vehicle {
 
 	}
 
+	public Moto() {
+
+	}
+
+	public void setTipus(TipoMoto.tipoMoto tipus) {
+		this.tipus = tipus;
+	}
+
 	public int getCilindrada() {
 
 		return cilindrada;

@@ -1,6 +1,12 @@
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,9 +14,14 @@ import java.io.PrintWriter;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class GestionFichero {
+public class GestionCSV {
+	// CAMBIAR Y HACER DOS METODOS DE GESTION. UNOO DE CSB Y OTRO DE XML. LA
+	// INTERFACE DEBE SER LA MISMA PARA LOS DOS.
+	public GestionCSV() {
 
-	static Set<Vehicle> llegirCSV(String nomFitxer) throws Exception {
+	}
+
+	Set<Vehicle> llegir(String nomFitxer) throws Exception {
 
 		File fitxer = new File(nomFitxer); // Adreçament relatiu
 
@@ -26,8 +37,6 @@ public class GestionFichero {
 				String matricula, marca, model, color;
 				int km;
 				String[] elemento = linia.split("; ");
-				if (elemento.length != 8)
-					throw new Exception("error en los datos recibidos");
 				matricula = elemento[1];
 				km = Integer.parseInt(elemento[2]);
 				marca = elemento[3];
@@ -59,7 +68,7 @@ public class GestionFichero {
 		}
 	}
 
-	static void desaCSV(String nomFitxer, Set<Vehicle> vehicles) {
+	static void desa(String nomFitxer, Set<Vehicle> vehicles) {
 		boolean append = false;
 
 		PrintWriter pWriter = null;
@@ -100,4 +109,20 @@ public class GestionFichero {
 		}
 
 	}
+
+	static Set<Vehicle> llegirXML(String nomFitxero) throws FileNotFoundException {
+
+		XMLDecoder d = new XMLDecoder(new BufferedInputStream(new FileInputStream(nomFitxero)));
+		Vehicle p2 = (Vehicle) d.readObject();
+		d.close();
+		return (Set<Vehicle>) p2;
+
+	}
+
+	static void desaXML(String nomFitxer, Set<Vehicle> vehicles) throws FileNotFoundException {
+		XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(nomFitxer)));
+		e.writeObject(vehicles);
+		e.close();
+	}
+
 }

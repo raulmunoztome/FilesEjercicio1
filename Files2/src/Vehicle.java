@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public abstract class Vehicle implements Comparable<Vehicle> {
-	protected final String matricula;
+public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
+	protected String matricula;
 	protected String marca;
 	protected String model;
 	protected String color;
@@ -10,7 +11,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
 
 	public Vehicle(String matricula, String marca, String model, String color, int km) throws Exception {
 		// Patrón inventado a seguir: AA 12345 AA
-		if (!Pattern.matches("[A-Z]{2,3}[0-9]{4,5}[A-Z]{2,3}", matricula))
+		if (!Pattern.matches("^[A-Z]{2}-[0-9]{5}-[A-Z]{2}$", matricula))
 			throw new Exception("Matricula no válida " + matricula);
 		this.matricula = matricula;
 		this.marca = marca;
@@ -19,6 +20,14 @@ public abstract class Vehicle implements Comparable<Vehicle> {
 		if (km < 0)
 			throw new Exception("Error en el km");
 		this.km = km;
+	}
+
+	public Vehicle() {
+
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
 	public int descuento() {

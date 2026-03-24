@@ -3,10 +3,14 @@ public class Coche extends Vehicle {
 	private boolean esAutomatic;
 	private int numportes;
 
-	public Coche(String matricula, String marca, String color, String model, int km, int numportes, boolean autom)
+	public Coche(String matricula, String marca, String model, String color, int km, int numportes, boolean autom)
 			throws Exception {
 		super(matricula, marca, color, model, km);
 		esAutomatic = autom;
+	}
+
+	public Coche() {
+
 	}
 
 	public int getNumportes() {
