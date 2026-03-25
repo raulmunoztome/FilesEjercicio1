@@ -1,6 +1,5 @@
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,23 +8,24 @@ public class PrincipalMain {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		String opcion = "10";
+		String opcion = "17";
 		String nombreArchivo = "";
 		Set<Vehicle> vset = new TreeSet<Vehicle>();
 
 		GestionCSV gestor1 = new GestionCSV();
 		GestionXML gestor2 = new GestionXML();
+		GestionBinario gestor3 = new GestionBinario();
 
 		try {
-			
+
 			Vehicle v1 = new Moto("AB-12345-BA", "Seat", "motorola", "azul", 5000, 125, "URBANA");
 			Vehicle v2 = new Moto("AF-10345-BA", "Tesla", "Alfa", "blanco", 8000, 125, "URBANA");
-			Vehicle v3 = new Coche("RT-44444-ZZ","Citroen","Picasso","rojo",20000,5,false);
+			Vehicle v3 = new Coche("RT-44444-ZZ", "Citroen", "Picasso", "rojo", 20000, 5, false);
 
 			vset.add(v1);
 			vset.add(v2);
 			vset.add(v3);
-			
+
 		} catch (Exception e) {
 
 			System.out.println(e.getMessage());
@@ -41,11 +41,11 @@ public class PrincipalMain {
 			case 1:
 				// FALTA ACCESO A LOS METODOS, YA NO SON ESTATICOS
 				try {
-					
+
 					System.out.println("Introduce el nombre del archivo: ");
 					nombreArchivo = sc.nextLine();
 					vset = gestor1.llegir(nombreArchivo);
-					
+
 				} catch (Exception e) {
 
 					System.out.println(e.getMessage());
@@ -68,7 +68,7 @@ public class PrincipalMain {
 
 			case 3:
 				for (Vehicle v : vset) {
-					System.out.println(v+"\n");
+					System.out.println(v + "\n");
 				}
 				break;
 
@@ -128,13 +128,13 @@ public class PrincipalMain {
 			case 5:
 				System.out.println("introduce la matricula: ");
 				String buscar = sc.nextLine();
-				if(Vehicle.deleteVehicle(buscar, vset)) {
+				if (Vehicle.deleteVehicle(buscar, vset)) {
 					System.out.println("vehiculo eliminado");
-				}
-				else System.out.println("Elemento no encontrado");
+				} else
+					System.out.println("Elemento no encontrado");
 				break;
 			case 6:
-				System.out.println("El vehiculo con mayor KM es:\n"+Vehicle.mayorKm(vset));
+				System.out.println("El vehiculo con mayor KM es:\n" + Vehicle.mayorKm(vset));
 				break;
 			case 7:
 				System.out.println("introduce el nombre del archivo donde guardar los vehiculos:");
@@ -147,7 +147,33 @@ public class PrincipalMain {
 				try {
 					gestor2.desa(archivo2, vset);
 				} catch (FileNotFoundException e) {
-					
+
+				}
+				break;
+			case 9:
+
+				System.out.println("introduce el nombre del archivo donde guardar los vehiculos:");
+
+				String archivoB = sc.nextLine();
+				try {
+					gestor3.desa(archivoB, vset);
+				} catch (FileNotFoundException e) {
+
+					System.out.println(e.getMessage());
+				} catch (IOException e) {
+
+					System.out.println(e.getMessage());
+				}
+				break;
+			case 10:
+				System.out.println("Introduce el nombre del archivo: ");
+
+				String encontrar = sc.nextLine();
+				try {
+					vset = gestor3.llegir(encontrar);
+
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
 				}
 				break;
 			}
@@ -166,6 +192,8 @@ public class PrincipalMain {
 		System.out.println("6 -> BUSCAR VEHICULO CON MAS KM");
 		System.out.println("7 -> GUARDAR FICHEROS EN UN CSV");
 		System.out.println("8 -> GUARDAR FICHEROS A UN XML");
+		System.out.println("9 -> GUARDAR EN BINARIO");
+		System.out.println("10 -> RECUPERAR EL BINARIO");
 
 	}
 }
