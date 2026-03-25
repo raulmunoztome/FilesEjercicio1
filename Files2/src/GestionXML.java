@@ -7,13 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Set;
 
-public class GestionXML {
+public class GestionXML implements GestoresOperaciones{
 
 	public GestionXML() {
 
 	}
 
-	Set<Vehicle> llegir(String nomFitxero) throws FileNotFoundException {
+	public Set<Vehicle> llegir(String nomFitxero) throws FileNotFoundException {
 
 		XMLDecoder d = new XMLDecoder(new BufferedInputStream(new FileInputStream(nomFitxero)));
 		Vehicle p2 = (Vehicle) d.readObject();
@@ -22,7 +22,7 @@ public class GestionXML {
 
 	}
 
-	void desa(String nomFitxer, Set<Vehicle> vehicles) throws FileNotFoundException {
+	public void desa(String nomFitxer, Set<Vehicle> vehicles) throws FileNotFoundException {
 		XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(nomFitxer)));
 		e.writeObject(vehicles);
 		e.close();

@@ -7,6 +7,7 @@ public class Coche extends Vehicle {
 			throws Exception {
 		super(matricula, marca, color, model, km);
 		esAutomatic = autom;
+		this.numportes = numportes;
 	}
 
 	public Coche() {
@@ -29,15 +30,23 @@ public class Coche extends Vehicle {
 		this.esAutomatic = esAutomatic;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "[ esAutomatic=" + esAutomatic + ", matricula=" + matricula + ", marca=" + marca + ", model=" + model
-				+ ", color=" + color + ", km=" + km + "]";
+		return "Coche [esAutomatic=" + esAutomatic + ", numportes=" + numportes + ", matricula=" + matricula
+				+ ", marca=" + marca + ", model=" + model + ", color=" + color + ", km=" + km + "]";
 	}
 
 	public static String formatoCSV(Coche v) {
-		return v.getClass().getName() + "; " + v.getMatricula() + "; " + v.getKm() + "; " + v.getMarca() + "; "
-				+ v.getModel() + "; " + v.getColor() + "; " + v.getKm() + " " + v.getNumportes();
+	    return "Coche; " +
+	            v.getMatricula() + "; " +
+	            v.getKm() + "; " +
+	            v.getMarca() + "; " +
+	            v.getModel() + "; " +
+	            v.getColor() + "; " +
+	            v.getNumportes() + "; " +
+	            v.isEsAutomatic();
 	}
 
 }

@@ -14,14 +14,13 @@ import java.io.PrintWriter;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class GestionCSV {
-	// CAMBIAR Y HACER DOS METODOS DE GESTION. UNOO DE CSB Y OTRO DE XML. LA
-	// INTERFACE DEBE SER LA MISMA PARA LOS DOS.
+public class GestionCSV implements GestoresOperaciones{
+
 	public GestionCSV() {
 
 	}
 
-	Set<Vehicle> llegir(String nomFitxer) throws Exception {
+	public Set<Vehicle> llegir(String nomFitxer) throws Exception {
 
 		File fitxer = new File(nomFitxer); // Adreçament relatiu
 
@@ -43,14 +42,14 @@ public class GestionCSV {
 				model = elemento[4];
 				color = elemento[5];
 
-				if (elemento[0] == "coche") {
+				if (elemento[0].equalsIgnoreCase("Coche")) {
 					boolean esAutomatic = Boolean.parseBoolean(elemento[7]);
-					int numPuertas = Integer.parseInt(elemento[8]);
+					int numPuertas = Integer.parseInt(elemento[6]);
 					total.add(new Coche(matricula, marca, model, color, km, numPuertas, esAutomatic));
 
 				} else {
-					int cilindrada = Integer.parseInt(elemento[7]);
-					String tipus = elemento[8];
+					int cilindrada = Integer.parseInt(elemento[6]);
+					String tipus = elemento[7];
 					total.add(new Moto(matricula, marca, model, color, km, cilindrada, tipus));
 				}
 
@@ -68,7 +67,7 @@ public class GestionCSV {
 		}
 	}
 
-	static void desa(String nomFitxer, Set<Vehicle> vehicles) {
+	public void desa(String nomFitxer, Set<Vehicle> vehicles) {
 		boolean append = false;
 
 		PrintWriter pWriter = null;
@@ -81,7 +80,8 @@ public class GestionCSV {
 
 			pWriter = new PrintWriter(fWriter);
 			for (Vehicle v : vehicles) {
-				pWriter.println(v);
+				if(v instanceof Coche) pWriter.println(Coche.formatoCSV((Coche)(v)));
+				else pWriter.println(Moto.formatoCSV((Moto)(v)));
 			}
 
 		} catch (Exception e) {
@@ -110,19 +110,6 @@ public class GestionCSV {
 
 	}
 
-	static Set<Vehicle> llegirXML(String nomFitxero) throws FileNotFoundException {
 
-		XMLDecoder d = new XMLDecoder(new BufferedInputStream(new FileInputStream(nomFitxero)));
-		Vehicle p2 = (Vehicle) d.readObject();
-		d.close();
-		return (Set<Vehicle>) p2;
-
-	}
-
-	static void desaXML(String nomFitxer, Set<Vehicle> vehicles) throws FileNotFoundException {
-		XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(nomFitxer)));
-		e.writeObject(vehicles);
-		e.close();
-	}
 
 }

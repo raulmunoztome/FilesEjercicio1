@@ -37,8 +37,7 @@ public class Moto extends Vehicle {
 	}
 
 	public String getTipus() {
-
-		return tipus.name();
+	    return (tipus != null) ? tipus.name() : "";
 	}
 
 	public void setTipus(String tipus) {
@@ -50,14 +49,18 @@ public class Moto extends Vehicle {
 	@Override
 	public String toString() {
 
-		return "[cilindrada=" + cilindrada + ", tipus=" + tipus + ", matricula=" + matricula + ", marca=" + marca
+		return "Moto [cilindrada=" + cilindrada + ", tipus=" + tipus + ", matricula=" + matricula + ", marca=" + marca
 				+ ", model=" + model + ", color=" + color + ", km=" + km + "]";
 	}
-
 	public static String formatoCSV(Moto v) {
-		return v.getClass().getName() + "; " + v.getMatricula() + "; " + v.getKm() + "; " + v.getMarca() + "; "
-				+ v.getModel() + "; " + v.getColor() + "; " + v.getKm() + "; " + v.getCilindrada() + "; "
-				+ v.getTipus();
+	    return "Moto; " +
+	            v.getMatricula() + "; " +
+	            v.getKm() + "; " +
+	            v.getMarca() + "; " +
+	            v.getModel() + "; " +
+	            v.getColor() + "; " +
+	            v.getCilindrada() + "; " +
+	            v.getTipus();
 	}
 
 	@Override

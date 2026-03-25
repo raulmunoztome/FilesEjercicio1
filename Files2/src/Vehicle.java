@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
@@ -38,6 +39,29 @@ public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
 			return 10;
 
 		return des;
+	}
+	public static boolean deleteVehicle(String mat, Set<Vehicle> v) {
+		Vehicle borrar = null;
+		for(Vehicle s : v) {
+			if(s.getMatricula().equals(mat)) {
+				borrar = s;
+				break;
+			}
+		}
+		return v.remove(borrar);
+	}
+	public static Vehicle mayorKm(Set<Vehicle> listado) {
+		int kms = 0;
+		Vehicle mandar = null;
+		
+		for(Vehicle v : listado) {
+			int compara = v.getKm();
+			if(kms < compara) {
+				kms = compara;
+				mandar = v;
+			}
+		}
+		return mandar;
 	}
 
 	public String getMarca() {
@@ -108,11 +132,6 @@ public abstract class Vehicle implements Serializable, Comparable<Vehicle> {
 		this.km = km;
 	}
 
-	public static String formatoCSV(Vehicle v) {
-
-		return v.getClass().getName() + "; " + v.getMatricula() + "; " + v.getKm() + "; " + v.getMarca() + "; "
-				+ v.getModel() + "; " + v.getColor();
-	}
 
 	public int compareTo(Vehicle p) {
 
